@@ -667,16 +667,16 @@ root.gen_lines_seg = (data, scale_coeff, detail, directions, mat, borders
 
 		geometry = new THREE.BufferGeometry()
 
-		geometry.addAttribute( 'position', new THREE.BufferAttribute( 
+		geometry.setAttribute( 'position', new THREE.BufferAttribute( 
 				new Float32Array(geometry_pnts), 3 
 			) )
 
-		geometry.addAttribute( 'color', new THREE.BufferAttribute( 
+		geometry.setAttribute( 'color', new THREE.BufferAttribute( 
 				new Float32Array(seg_colors), 3 
 			) )
 
 		geometry.computeBoundingSphere()
-		geometry.computeLineDistances()
+		
 
 		if not dashed
 			material = new THREE.LineBasicMaterial(
@@ -690,6 +690,7 @@ root.gen_lines_seg = (data, scale_coeff, detail, directions, mat, borders
 		sceneObject.scale.x = scale_coeff
 		sceneObject.scale.y = scale_coeff
 		sceneObject.scale.z = scale_coeff
+		sceneObject.computeLineDistances()
 
 		root.lines_seg.add( sceneObject )
 
@@ -1207,12 +1208,12 @@ root.add_line = (pnts, scale_coeff, material, name, dashed=false) ->
 	
 	geometry = new THREE.BufferGeometry()
 	
-	geometry.addAttribute( 'position', new THREE.BufferAttribute( 
+	geometry.setAttribute( 'position', new THREE.BufferAttribute( 
 			new Float32Array(pnts), 3 
 		) )
 	
 	geometry.computeBoundingSphere()
-	geometry.computeLineDistances();
+	
 	
 	if not dashed
 		sceneObject = new THREE.Line( geometry, material )
@@ -1224,6 +1225,7 @@ root.add_line = (pnts, scale_coeff, material, name, dashed=false) ->
 	sceneObject.scale.x = scale_coeff
 	sceneObject.scale.y = scale_coeff
 	sceneObject.scale.z = scale_coeff
+	sceneObject.computeLineDistances();
 
 	root.lines.add( sceneObject )
 
@@ -1526,8 +1528,7 @@ root.GridFaces =
 				filter_scalar, filter_list)
 
 
-		root.faces = new THREE.Mesh(root.faces_geometry, new THREE.MeshFaceMaterial(
-			root.faces_materials))
+		root.faces = new THREE.Mesh(root.faces_geometry, root.faces_materials)
 
 		[root.faces, root.faces_names]
 
@@ -1622,10 +1623,10 @@ root.GridPoints =
 									
 									root.cubes.add( sprite )
 
-		geometry.addAttribute('position', 
+		geometry.setAttribute('position', 
 			new THREE.BufferAttribute( new Float32Array(positions), 3 ) );
 
-		geometry.addAttribute('color', 
+		geometry.setAttribute('color', 
 			new THREE.BufferAttribute( new Float32Array(colors), 3 ) );
 
 		material = new THREE.PointsMaterial({vertexColors: THREE.VertexColors, size: radius * 2, sizeAttenuation: true})

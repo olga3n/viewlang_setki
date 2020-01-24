@@ -103,14 +103,15 @@ SceneObject
 		
 		var geometry = new THREE.BufferGeometry()
 
-		geometry.addAttribute( 'position', new THREE.BufferAttribute( 
+		geometry.setAttribute( 'position', new THREE.BufferAttribute( 
 				new Float32Array(pnts), 3 
 			) )
 		
-		geometry.computeBoundingSphere()
-		geometry.computeLineDistances();
+		geometry.computeBoundingSphere();
 
-		return new THREE.LineSegments( geometry, material )
+		var lines = new THREE.LineSegments( geometry, material );
+		lines.computeLineDistances();
+		return lines;
 	}
 
 	function clear() {

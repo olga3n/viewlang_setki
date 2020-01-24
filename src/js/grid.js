@@ -782,10 +782,10 @@
     }
     if (geometry_pnts.length) {
       geometry = new THREE.BufferGeometry();
-      geometry.addAttribute('position', new THREE.BufferAttribute(new Float32Array(geometry_pnts), 3));
-      geometry.addAttribute('color', new THREE.BufferAttribute(new Float32Array(seg_colors), 3));
+      geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(geometry_pnts), 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(seg_colors), 3));
       geometry.computeBoundingSphere();
-      geometry.computeLineDistances();
+      
       if (!dashed) {
         material = new THREE.LineBasicMaterial({
           linewidth: 1,
@@ -803,6 +803,7 @@
       sceneObject.scale.x = scale_coeff;
       sceneObject.scale.y = scale_coeff;
       sceneObject.scale.z = scale_coeff;
+      sceneObject.computeLineDistances();
       return root.lines_seg.add(sceneObject);
     }
   };
@@ -1515,9 +1516,9 @@
       dashed = false;
     }
     geometry = new THREE.BufferGeometry();
-    geometry.addAttribute('position', new THREE.BufferAttribute(new Float32Array(pnts), 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pnts), 3));
     geometry.computeBoundingSphere();
-    geometry.computeLineDistances();
+    
     if (!dashed) {
       sceneObject = new THREE.Line(geometry, material);
     } else {
@@ -1527,6 +1528,7 @@
     sceneObject.scale.x = scale_coeff;
     sceneObject.scale.y = scale_coeff;
     sceneObject.scale.z = scale_coeff;
+    sceneObject.computeLineDistances();
     return root.lines.add(sceneObject);
   };
 
@@ -1850,7 +1852,7 @@
       } else {
         gen_surfaces(data, scale_coeff, detail, directions, materials, filter, filter_directions, filter_materials, filter_scalar, filter_list);
       }
-      root.faces = new THREE.Mesh(root.faces_geometry, new THREE.MeshFaceMaterial(root.faces_materials));
+      root.faces = new THREE.Mesh(root.faces_geometry, root.faces_materials);
       return [root.faces, root.faces_names];
     }
   };
@@ -1951,8 +1953,8 @@
         k = data[k_index];
         fn2(k);
       }
-      geometry.addAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
-      geometry.addAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
+      geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
       material = new THREE.PointsMaterial({
         vertexColors: THREE.VertexColors,
         size: radius * 2,

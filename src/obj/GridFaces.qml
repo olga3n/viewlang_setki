@@ -109,7 +109,7 @@ SceneObject
 				for (var i = 0; i < faces_names.length; i++) {
 					
 					var n = faces_names[i];
-					var tmp = obj.material.materials[i];
+					var tmp = obj.material[i];
 
 					if (colors.length + filter_colors.length <= n) {
 						makeLater(this);
@@ -126,7 +126,7 @@ SceneObject
 						mat_colors = [colors[0], colors[1], colors[2]];
 					}
 
-					obj.material.materials[i] = new THREE.MeshBasicMaterial({ 
+					obj.material[i] = new THREE.MeshBasicMaterial({
 						color: (n < 3)? mat_colors[n]: filter_colors[n - 3], 
 						side: THREE.FrontSide, transparent: true,
 						opacity: (n < 3)? options[0]: filter_options[0]
@@ -141,14 +141,14 @@ SceneObject
 				for (var i = 0; i < faces_names.length; i++) {
 
 					var n = faces_names[i];
-					var tmp = obj.material.materials[i];
+					var tmp = obj.material[i];
 
 					if (filter_colors.length <= n) {
 						makeLater(this);
 						return;
 					}
 
-					obj.material.materials[i] = new THREE.MeshBasicMaterial({ 
+					obj.material[i] = new THREE.MeshBasicMaterial({
 						color: filter_colors[n], 
 						side: THREE.FrontSide, transparent: true,
 						opacity: filter_options[0]
@@ -197,9 +197,9 @@ SceneObject
 			scene.remove( obj );
 			if (obj.geometry) obj.geometry.dispose();
 
-			for (var i = 0; i < obj.material.materials.length; i++)
-				if (obj.material.materials[i])
-					obj.material.materials[i].dispose();
+			for (var i = 0; i < obj.material.length; i++)
+				if (obj.material[i])
+					obj.material[i].dispose();
 
 			obj = undefined;
 		}
