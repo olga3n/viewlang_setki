@@ -1528,8 +1528,7 @@ root.GridFaces =
 				filter_scalar, filter_list)
 
 
-		root.faces = new THREE.Mesh(root.faces_geometry, new THREE.MeshFaceMaterial(
-			root.faces_materials))
+		root.faces = new THREE.Mesh(root.faces_geometry, root.faces_materials)
 
 		[root.faces, root.faces_names]
 

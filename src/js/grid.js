@@ -1852,7 +1852,7 @@
       } else {
         gen_surfaces(data, scale_coeff, detail, directions, materials, filter, filter_directions, filter_materials, filter_scalar, filter_list);
       }
-      root.faces = new THREE.Mesh(root.faces_geometry, new THREE.MeshFaceMaterial(root.faces_materials));
+      root.faces = new THREE.Mesh(root.faces_geometry, root.faces_materials);
       return [root.faces, root.faces_names];
     }
   };
